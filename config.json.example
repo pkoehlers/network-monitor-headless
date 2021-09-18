@@ -1,0 +1,41 @@
+{
+  "speedtest": {
+    "schedule": "30/* * * * *"
+  },
+  "pingMonitors": [
+    {
+      "website": "https://google.com",
+      "title": "google",
+      "interval": 5,
+      "confing": {
+        "intervalUnits": "minutes"
+      },
+      "httpOptions": {
+        "path": "/",
+        "method": "get",
+        "query": {}
+      },
+      "expect": {
+        "statusCode": 200
+      }
+    },
+    {
+      "address": "https://www.vodafone.de/",
+      "title": "tcp test",
+      "interval": 5,
+      "confing": {
+        "intervalUnits": "minutes"
+      },
+      "port": 1234
+    }
+  ],
+  "messaging": [
+    {
+      "interface": "TELEGRAM",
+      "botToken": "this integration can safely be removed if telegram is not needed",
+      "chatId": 1234,
+      "pollingInterval": 5000,
+      "pollingTimeout": 5
+    }
+  ]
+}

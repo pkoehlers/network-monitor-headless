@@ -1,0 +1,49 @@
+{
+    "name": "network-monitor-headless",
+    "version": "1.0.0",
+    "description": "Continuously check the internet connection with a headless raspberry pi",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pkoehlers/network-monitor-headless"
+    },
+    "author": "pkoehlers",
+    "license": "MIT",
+    "scripts": {
+        "build-ts": "tsc",
+        "build": "npm run build-ts && npm run lint",
+        "debug": "npm run build && npm run watch-debug",
+        "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+        "serve": "node dist/app.js",
+        "start": "npm run serve",
+        "test": "jest --forceExit --coverage --verbose",
+        "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\"",
+        "watch-node": "nodemon dist/app.js",
+        "watch-test": "npm run test -- --watchAll",
+        "watch-ts": "tsc -w",
+        "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\""
+    },
+    "dependencies": {
+        "dotenv": "^10.0.0",
+        "node-cron": "^3.0.0",
+        "node-telegram-bot-api": "^0.54.0",
+        "ping-monitor": "^0.6.1",
+        "rxjs": "~6.6.0",
+        "speedtest-net": "^2.2.0",
+        "winston": "3.3.3"
+    },
+    "devDependencies": {
+        "@types/eslint": "7.2.6",
+        "@types/jest": "^27.0.1",
+        "@types/node": "14.14.25",
+        "@types/node-cron": "^2.0.4",
+        "@types/node-telegram-bot-api": "^0.51.4",
+        "@types/speedtest-net": "^2.1.1",
+        "@typescript-eslint/eslint-plugin": "4.14.2",
+        "@typescript-eslint/parser": "4.14.2",
+        "eslint": "7.19.0",
+        "jest": "^27.2.0",
+        "ts-jest": "^27.0.5",
+        "ts-node": "9.1.1",
+        "typescript": "^4.4.3"
+    }
+}
