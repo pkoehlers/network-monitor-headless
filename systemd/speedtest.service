@@ -1,0 +1,14 @@
+[Unit]
+Description=Docker Speedtest
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+User=speedtest
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run --rm --name %n -e LOG_DIR='./log' --mount type=bind,source=/opt/speedtest/log,target=/usr/src/app/log pkoehlers/rpi-remote-speedtest
+
+[Install]
+WantedBy=multi-user.target
