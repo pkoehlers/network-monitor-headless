@@ -31,6 +31,11 @@ export class SpeedTestService {
                 this.messageDispatcher.sendMessage("schedule could not be saved:" + e);
             }
         });
+        const speedTestConfig = this.configProvider.getConfig().speedtest;
+        if (speedTestConfig !== undefined) {
+            this.setScheduledTest(speedTestConfig.schedule);
+        }
+
     }
     executeSpeedtest(): void {
         speedTest({acceptGdpr: true, acceptLicense: true}).then(result => {
