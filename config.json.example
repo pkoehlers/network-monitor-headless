@@ -18,15 +18,6 @@
       "expect": {
         "statusCode": 200
       }
-    },
-    {
-      "address": "https://www.vodafone.de/",
-      "title": "tcp test",
-      "interval": 5,
-      "confing": {
-        "intervalUnits": "minutes"
-      },
-      "port": 1234
     }
   ],
   "messaging": [
