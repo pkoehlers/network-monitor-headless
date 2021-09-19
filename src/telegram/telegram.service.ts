@@ -1,6 +1,5 @@
 import logger from "../util/logger";
-import { ConfigProvider } from "../config/config.provider";
-import TelegramBot, { Message } from "node-telegram-bot-api";
+import TelegramBot from "node-telegram-bot-api";
 import { MessageSender } from "../messaging/message-sender";
 import { MessageReceiver } from "../messaging/message-receiver";
 import { TelegramConfig } from "./telegram-config";
@@ -26,7 +25,7 @@ export class TelegramService implements MessageSender, MessageReceiver {
     sendMessage(msg: string): Promise<boolean> {
       logger.debug("sending telegram message: " + msg);
 
-      if (this.config.chatId === undefined || this.config.chatId <= 0) {
+      if (this.config.chatId === undefined || this.config.chatId === 0) {
         logger.warn("telegram chat id not sent. omitting message send");
         return Promise.resolve(false);
       }
@@ -60,13 +59,7 @@ export class TelegramService implements MessageSender, MessageReceiver {
         resp += "/speedtest - manually trigger immediate execution of speedtest";
         this.bot.sendMessage(chatId, resp);
       });
-      this.bot.onText(/\/tg-errors/, (msg, match) => {
-      
-        const chatId = msg.chat.id;
-        const resp = "telegram issues since start: " + chatId;
-      
-        this.bot.sendMessage(chatId, resp);
-      });
+
     }
     registerErrorMessageHandlers(): void {
       this.bot.on("polling_error", (error) => {

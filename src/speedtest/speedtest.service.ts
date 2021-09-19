@@ -16,27 +16,22 @@ export class SpeedTestService {
         this.configProvider = configProvider;
         this.messageDispatcher = messageDispatcher;
 
-        this.messageDispatcher.registerMessageHandler(/\/speedtest/, this.messageHandlerSpeedtest);
+        this.messageDispatcher.registerMessageHandler(/\/speedtest/, (msg: string, match: RegExpExecArray) => {
+            this.messageDispatcher.sendMessage("starting manual speed test...");
+            this.executeSpeedtest();
+        });
 
-        this.messageDispatcher.registerMessageHandler(/\/speedtest-schedule (.*)/, this.messageHandlerSchedule);
+        this.messageDispatcher.registerMessageHandler(/\/speedtest-schedule (.*)/, (msg: string, match: RegExpExecArray) => {
+            try {
+                this.setScheduledTest(match[1]);
+                this.messageDispatcher.sendMessage("schedule saved");
+            }
+            catch (e) {
+                logger.warn(e);
+                this.messageDispatcher.sendMessage("schedule could not be saved:" + e);
+            }
+        });
     }
-
-    messageHandlerSpeedtest(ms: string, match: RegExpExecArray): void {
-        this.messageDispatcher.sendMessage("starting manual speed test...");
-        this.executeSpeedtest();
-    }
-    messageHandlerSchedule(ms: string, match: RegExpExecArray): void {
-        try {
-            this.setScheduledTest(match[1]);
-            this.messageDispatcher.sendMessage("schedule saved");
-        }
-        catch (e) {
-            logger.warn(e);
-            this.messageDispatcher.sendMessage("error:" + e);
-        }
-        
-    }
-
     executeSpeedtest(): void {
         speedTest({acceptGdpr: true, acceptLicense: true}).then(result => {
             logger.info("Speedtest finished successfully");

@@ -29,24 +29,28 @@ export class MonitorService {
         this.initMonitors();
         this.messageDispatcher.registerMessageHandler(/\/monitor-interval (all|\d+) (\d+)/, (msg, match) => {
             this.messageDispatcher.sendMessage("starting interval update...");
-            const newInterval: number = parseInt(match[2]);
-            if (newInterval === null) {
-                this.messageDispatcher.sendMessage("invalid arguments");
-                return;
+            try {
+                const newInterval: number = parseInt(match[2]);
+                if (newInterval === null) {
+                    throw new Error("invalid arguments");
+                }
+                if (match[1] === "all") {
+                    this.monitors.forEach(monitor => monitor.stop());
+                    this.configs.forEach(config => config.interval = newInterval);
+                    this.monitors = [];
+                    this.initMonitors();
+                } else {
+                    const matchIndex: number = parseInt(match[1]);
+                    const monitor: Monitor = this.monitors[matchIndex];
+                    this.configs[matchIndex].interval = newInterval;
+                    monitor.stop();
+                    this.monitors[matchIndex] = this.initMonitor(this.configs[matchIndex]);
+                }
+            } catch (error) {
+                this.messageDispatcher.sendMessage("interval could not be set: " + error.message);
+                logger.warn(error);
             }
-            if (match[1] === "all") {
-                this.monitors.forEach(monitor => monitor.stop());
-                this.configs.forEach(config => config.interval = newInterval);
-                this.monitors = [];
-                this.initMonitors();
-            } else {
-                const matchIndex: number = parseInt(match[1]);
-                const monitor: Monitor = this.monitors[matchIndex];
-                this.configs[matchIndex].interval = newInterval;
-                monitor.stop();
-                this.monitors[matchIndex] = this.initMonitor(this.configs[matchIndex]);
-            }
-            
+
             this.configProvider.writeConfig();
             
         });
