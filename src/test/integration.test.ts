@@ -53,8 +53,8 @@ describe("integration tests", () => {
         const nockMessageSend = clientTelegramService.mockUpdateNoMessageSend();
 
         const now = new Date();
-        clientTelegramService.mockMessageSend(["/help", "/chatid", "/schedule some-invalid", 
-            "/schedule " + now.getSeconds() + " " + now.getMinutes() + " * * * *", "/monitor-interval all 4",
+        clientTelegramService.mockMessageSend(["/help", "/chatid", "/speedtest-schedule some-invalid", 
+            "/speedtest-schedule " + now.getSeconds() + " " + now.getMinutes() + " * * * *", "/monitor-interval all 4",
             "/monitor-interval 0 6", "/speedtest"]);
 
 

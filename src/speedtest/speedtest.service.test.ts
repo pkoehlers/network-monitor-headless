@@ -45,7 +45,7 @@ describe("speedtest tests", () => {
         jest.clearAllMocks();
     });
     it("constructor set up message handlers correctly", () => {
-        process.env.CONFIG_FILE = "test/config.json";
+        process.env.CONFIG_FILE = "test/config-dummy.json";
         const tested: SpeedTestService = new SpeedTestService(new ConfigJsonProvider(), new MessageDispatcher());
 
         const mockMessageDispatcherInstance = mocked(MessageDispatcher).mock.instances[0];
