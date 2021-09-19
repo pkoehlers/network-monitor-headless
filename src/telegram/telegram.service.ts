@@ -55,8 +55,9 @@ export class TelegramService implements MessageSender, MessageReceiver {
         const chatId = msg.chat.id;
         let resp = "Usage: ";
         resp += "/chatid - responds with the id of the current chat";
-        resp += "/schedule <cron format> - sets the format to the supplied schedule. Format is: (second) minute hour 'day of month' month 'day of week'";
+        resp += "/speedtest-schedule <cron format> - sets the format to the supplied schedule. Format is: (second) minute hour 'day of month' month 'day of week'";
         resp += "/speedtest - manually trigger immediate execution of speedtest";
+        resp += "/monitor-interval <monitor index | all> <interval> - change the interval config of one or all ping monitors";
         this.bot.sendMessage(chatId, resp);
       });
 
