@@ -1,0 +1,40 @@
+{
+  "speedtest": {
+    "schedule": "30/* * * * *"
+  },
+  "pingMonitors": [
+    {
+      "website": "https://url",
+      "title": "monitor1",
+      "interval": 5,
+      "confing": {
+        "intervalUnits": "minutes"
+      },
+      "httpOptions": {
+        "path": "/",
+        "method": "get",
+        "query": {}
+      },
+      "expect": {
+        "statusCode": 200
+      }
+    },
+    {
+      "address": "tcp://endpoint",
+      "title": "monitor2",
+      "interval": 4,
+      "confing": {
+        "intervalUnits": "minutes"
+      }
+    }
+  ],
+  "messaging": [
+    {
+      "interface": "TELEGRAM",
+      "botToken": "132456789:token",
+      "chatId": 1234,
+      "pollingInterval": 5000,
+      "pollingTimeout": 4
+    }
+  ]
+}

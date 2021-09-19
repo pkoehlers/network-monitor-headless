@@ -41,4 +41,4 @@ dist/**/*
 yarn.lock
 
 # project specific
-test
+config.json

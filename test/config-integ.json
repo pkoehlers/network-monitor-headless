@@ -1,0 +1,32 @@
+{
+  "speedtest": {
+    "schedule": "30/* * * * *"
+  },
+  "pingMonitors": [
+    {
+      "website": "https://mockedserverurl.com",
+      "title": "http",
+      "interval": 5,
+      "confing": {
+        "intervalUnits": "minutes"
+      },
+      "httpOptions": {
+        "path": "/",
+        "method": "get",
+        "query": {}
+      },
+      "expect": {
+        "statusCode": 200
+      }
+    }
+  ],
+  "messaging": [
+    {
+      "interface": "TELEGRAM",
+      "botToken": "some_test_token",
+      "chatId": -123,
+      "pollingInterval": 10000,
+      "pollingTimeout": 4
+    }
+  ]
+}

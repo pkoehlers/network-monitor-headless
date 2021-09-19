@@ -1,0 +1,15 @@
+{
+  "speedtest": {
+    "schedule": "30/* * * * *"
+  },
+  "pingMonitors": [],
+  "messaging": [
+    {
+      "interface": "TELEGRAM",
+      "botToken": "some_token",
+      "chatId": -123456,
+      "pollingInterval": 5000,
+      "pollingTimeout": 4
+    }
+  ]
+}
